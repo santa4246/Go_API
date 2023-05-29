@@ -64,5 +64,13 @@ func StudentHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.ListenAndServe(":5000", MakeWebHandler())
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+		fmt.Fprint(w, "Hello World")
+	})
+
+	err := http.ListenAndServeTLS(":5000", "cert/localhost.crt", "cert/localhost.key", nil)
+
+	if err != nil{
+		log.Fatal(err)
+	}
 }
