@@ -25,7 +25,16 @@ cd go_project
 go mod download
 ```
 
-4. 서버 실행
+4. localhost 인증서 설치 후 cert 폴더로 이동
+```
+// rsa:2048 방식으로 키를 생성해서 localhost.key 파일로 저장 후 인증 파일은 localhost.csr로 저장
+openssl req -new -newkey rsa:2048 -nodes -keyout localhost.key -out localhost.csr
+
+// x509 알고리즘 사용하여 1년짜리 인증서 발급
+openssl x509 -req -days 365 -in localhost.csr -signkey localhost.key -out localhost.crt
+```
+
+5. 서버 실행
 ```bash
 go run main.go
 ```
